@@ -56,7 +56,7 @@ public class CoreFeatures{
     public void add(double number) 
     {
         if (checkError()) return;
-        displayValue += number;
+        this.displayValue += number;
     }
 
     
