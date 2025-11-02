@@ -6,6 +6,7 @@ import java.util.Scanner;
  * Created by leon on 2/9/18.
  */
 public class Console {
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static void print(String output, Object... args) {
         System.out.printf(output, args);
@@ -16,17 +17,29 @@ public class Console {
     }
 
     public static String getStringInput(String prompt) {
-        Scanner scanner = new Scanner(System.in);
-        println(prompt);
-        String userInput = scanner.nextLine();
-        return userInput;
+        print (prompt);
+        return scanner.nextLine();
     }
 
     public static Integer getIntegerInput(String prompt) {
-        return null;
+        print(prompt);
+        while (!scanner.hasNextInt()) {
+            print("Invalid input. Please enter a valid integer: ");
+            scanner.next();
+        }
+        Integer result = scanner.nextInt();
+        scanner.nextLine();
+        return result;
     }
 
     public static Double getDoubleInput(String prompt) {
-        return null;
+        print(prompt);
+        while (!scanner.hasNextDouble()) {
+            print("Invalid input. Please enter a number: ");
+            scanner.next();
+        }
+        Double result = scanner.nextDouble();
+        scanner.nextLine();
+        return result;
     }
 }
