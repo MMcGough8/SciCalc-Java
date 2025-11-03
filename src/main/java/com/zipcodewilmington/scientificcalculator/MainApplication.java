@@ -1,20 +1,30 @@
 package com.zipcodewilmington.scientificcalculator;
 
+
 /**
  * Created by leon on 2/9/18.
  */
 public class MainApplication {
+
     public static void main(String[] args) {
-        Console.println("Welcome to our calculator!");
-        String s = Console.getStringInput("Get back to work!");
-        Integer i = Console.getIntegerInput("Enter an integer");
-        Double d = Console.getDoubleInput("Enter a double.");
 
-        Console.println("The user input %s as a string", s);
-        Console.println("The user input %s as a integer", i);
-        Console.println("The user input %s as a double", d);
+        CoreFeatures coreCalc = new CoreFeatures();
+        ScientificCalculator sciCalc = new ScientificCalculator();
+
+        System.out.println("Welcome to Scientific Calculator");
+
+        boolean keepRunning = true;
+        while (keepRunning) {
+            showOption();
+            int option = Console.getIntegerInput("Please select an option: ");
+            if (option == 21) {
+                keepRunning = false;
+                continue;
+            }
+            runOption(option, coreCalc, sciCalc);
+        }
     }
-
+ 
 
 public static void showOption() {
         System.out.println("0.  clear display");
@@ -41,198 +51,230 @@ public static void showOption() {
         System.out.println("21. exit");
     }
 
+    public static String outputConverter(ScientificCalculator sciCalc, Double value) {
+        String mode = sciCalc.getDisplayMode();
 
-public static void runOption(Integer option, CoreFeatures cfcalc, ScientificCalculator sCalc) {
-    
+        switch (mode) {
+        case "DEC":
+            return String.valueOf(value);
+            
+        case "HEX":
+            return Integer.toHexString(value.intValue()).toUpperCase();
+            
+        case "OCT":
+            return Integer.toOctalString(value.intValue());
+            
+        case "BIN":
+            return Integer.toBinaryString(value.intValue());
+            
+        default:
+            return String.valueOf(value);
+    }
+}
+
+public static void runOption(int option, CoreFeatures coreCalc, ScientificCalculator sciCalc) {
+
     Double userinput;
 
-    boolean isdiplayval = cfcalc.getDisplayvalue() != 0.0;
+    boolean isdisplay = coreCalc.getDisplayValue() != 0.0;
 
 
     switch (option) {
         case 0:
-            cfcalc.clearDisplay();
-            cfcalc.setDisplay(0.0);
+            coreCalc.clearDisplay();
+            coreCalc.setDisplay(0.0);
             break;
         case 1:
-             if (!isdiplayval) {
+             if (!isdisplay) {
                 userinput = Console.getDoubleInput("Enter a number");
-                cfcalc.setDisplay(userinput);
+                coreCalc.setDisplay(userinput);
             }
             userinput = Console.getDoubleInput("Enter a number to add");
-            cfcalc.add(userinput);
-            System.out.println("= " + outputConverter(sCalc, cfcalc.getDisplayvalue()));
+            coreCalc.add (userinput);
+            System.out.println("= " + outputConverter(sciCalc, coreCalc.getDisplayValue()));
             break;
         case 2: 
-            if (!isdiplayval) {
+            if (!isdisplay) {
                 userinput = Console.getDoubleInput("Enter a number");
-                cfcalc.setDisplay(userinput);
+                coreCalc.setDisplay(userinput);
         }
         userinput = Console.getDoubleInput("Enter a number to add");
-        cfcalc.add(userinput);
-        System.out.println("= + outputConverter(sCalc, cfcalc.getDisplayvalue())");
+        coreCalc.subtract (userinput);
+        System.out.println("= " + outputConverter(sciCalc, coreCalc.getDisplayValue()));
             break;
         case 3:
-             if (!isdiplayval) {
+             if (!isdisplay) {
                 userinput = Console.getDoubleInput("Enter a number");
-                cfcalc.setDisplay(userinput);
+                coreCalc.setDisplay(userinput);
             }
             userinput = Console.getDoubleInput("Enter a number to multiply");
-            cfcalc.multiply(userinput);
-            System.out.println("= " + outputConverter(sCalc, cfcalc.getDisplayvalue()));
+            coreCalc.multiply(userinput);
+            System.out.println("= " + outputConverter(sciCalc, coreCalc.getDisplayValue()));
             break;
         case 4:
-             if (!isdiplayval) {
+             if (!isdisplay) {
                 userinput = Console.getDoubleInput("Enter a number");
-                cfcalc.setDisplay(userinput);
+                coreCalc.setDisplay(userinput);
             }
             userinput = Console.getDoubleInput("Enter a number to divide");
-            cfcalc.divide(userinput);
-            System.out.println("= " + outputConverter(sCalc, cfcalc.getDisplayvalue()));
+            coreCalc.divide(userinput);
+            System.out.println("= " + outputConverter(sciCalc, coreCalc.getDisplayValue()));
             break;
         case 5:
-            if (!isdiplayval) {
+            if (!isdisplay) {
                 userinput = Console.getDoubleInput("Enter a number");
-                cfcalc.setDisplay(userinput);
+                coreCalc.setDisplay(userinput);
             }
-            cfcalc.square();
-            System.out.println("= " + outputConverter(sCalc, cfcalc.getDisplayvalue()));
+            coreCalc.square();
+            System.out.println("= " + outputConverter(sciCalc, coreCalc.getDisplayValue()));
             break;
         case 6:
-            if (!isdiplayval) {
-                userinput = Console.getDoubleInput("Enter a number");
-                cfcalc.setDisplay(userinput);
+            if (!isdisplay) {
+                userinput = Console.getDoubleInput("Enter a number ");
+                coreCalc.setDisplay(userinput );
             }
-            cfcalc.squareRoot();
-            System.out.println("= " + outputConverter(sCalc, cfcalc.getDisplayvalue()));
+            coreCalc.squareRoot();
+            System.out.println("= " + outputConverter(sciCalc, coreCalc.getDisplayValue()));
             break;
         case 7:
-            if (!isdiplayval) {
-                userinput = Console.getDoubleInput("Enter a number");
-                cfcalc.setDisplay(userinput);
+            if (!isdisplay) {
+                userinput = Console.getDoubleInput("Enter a number ");
+                coreCalc.setDisplay(userinput);
             }
-            cfcalc.inverse();                                          
-            System.out.println("= " + outputConverter(sCalc, cfcalc.getDisplayvalue()));
+            coreCalc.inverse();
+            System.out.println("= " + outputConverter(sciCalc, coreCalc.getDisplayValue()));
             break;
         case 8:
-            if (!isdiplayval) {
-                userinput = Console.getDoubleInput("Enter a number");
-                cfcalc.setDisplay(userinput);
+            if (!isdisplay) {
+                userinput = Console.getDoubleInput("Enter a number ");
+                coreCalc.setDisplay(userinput);
             }
-            cfcalc.inverseSign();
-            System.out.println("= " + outputConverter(sCalc, cfcalc.getDisplayvalue()));
+            coreCalc.inverseSign();
+            System.out.println("= " + outputConverter(sciCalc, coreCalc.getDisplayValue()));
             break;
         case 9:
-            if (!isdiplayval) {
-                userinput = Console.getDoubleInput("Enter a number");
-                cfcalc.setDisplay(userinput);
+            if (!isdisplay) {
+                userinput = Console.getDoubleInput("Enter a number to get sine of: ");
+                coreCalc.setDisplay(userinput);
             }
-            System.out.println("sine(" + (cfcalc.getDisplayvalue() + ") = " + outputConverter(sCalc, cfcalc.sine(cfcalc.getDisplayvalue()))));
+            double result = sciCalc.sine(coreCalc.getDisplayValue());
+            coreCalc.setDisplay(result);
+            System.out.println("= " + outputConverter(sciCalc, coreCalc.getDisplayValue()));    
             break;
         case 10:
-        if (!isdiplayval) {
+        if (!isdisplay) {
                     userinput = Console.getDoubleInput("Enter a number to get cosine of: ");
-                    cfcalc.setDisplay(userinput);
+                    coreCalc.setDisplay(userinput);
                 }
-                System.out.println("cosine(" + cfcalc.getDisplayValue() + ")= "
-                        + outputConverter(sCalc, sCalc.cosine(cfcalc.getDisplayValue())));
+                System.out.println("cosine(" + coreCalc.getDisplayValue() + ")= "
+                        + outputConverter(sciCalc, sciCalc.cosine(coreCalc.getDisplayValue())));
                 break;
             case 11:
-                if (!isdiplayval) {
+                if (!isdisplay) {
                     userinput = Console.getDoubleInput("Enter a number to get tangent of: ");
-                    cfcalc.setDisplay(userinput);
+                    coreCalc.setDisplay(userinput);
                 }
-                System.out.println("tangent(" + cfcalc.getDisplayValue() + ")= "
-                        + outputConverter(sCalc, sCalc.tangent(cfcalc.getDisplayValue())));
+                System.out.println("tangent(" + coreCalc.getDisplayValue() + ")= "
+                        + outputConverter(sciCalc, sciCalc.tangent(coreCalc.getDisplayValue())));
                 break;
             case 12:
-                if (!isdiplayval) {
+                if (!isdisplay) {
                     userinput = Console.getDoubleInput("Enter a number to get inverse sine of: ");
-                    cfcalc.setDisplay(userinput);
+                    coreCalc.setDisplay(userinput);
                 }
-                System.out.println("inverse sine(" + cfcalc.getDisplayValue() + ")= "
-                        + outputConverter(sCalc, sCalc.inverseSine(cfcalc.getDisplayValue())));
+                System.out.println("inverse sine(" + coreCalc.getDisplayValue() + ")= "
+                        + outputConverter(sciCalc, sciCalc.inverseSine(coreCalc.getDisplayValue())));
                 break;
             case 13:
-                if (!isdiplayval) {
+                if (!isdisplay) {
                     userinput = Console.getDoubleInput("Enter a number to get inverse cosine of: ");
-                    cfcalc.setDisplay(userinput);
+                    coreCalc.setDisplay(userinput);
                 }
-                System.out.println("inverse cosine(" + cfcalc.getDisplayValue() + ")= "
-                        + outputConverter(sCalc, sCalc.inverseCosine(cfcalc.getDisplayValue())));
+                System.out.println("inverse cosine(" + coreCalc.getDisplayValue() + ")= "
+                        + outputConverter(sciCalc, sciCalc.inverseCosine(coreCalc.getDisplayValue())));
                 break;
             case 14:
-                if (!isdiplayval) {
+                if (!isdisplay) {
                     userinput = Console.getDoubleInput("Enter a number: enter a number to get inverse tangent of ");
-                    cfcalc.setDisplay(userinput);
+                    coreCalc.setDisplay(userinput);
                 }
-                System.out.println("inverse tangent(" + cfcalc.getDisplayValue() + ")= "
-                        + outputConverter(sCalc, sCalc.inverseTangent(cfcalc.getDisplayValue())));
+                System.out.println("inverse tangent(" + coreCalc.getDisplayValue() + ")= "
+                        + outputConverter(sciCalc, sciCalc.inverseTangent(coreCalc.getDisplayValue())));
                 break;
             case 15:
-                if (!isdiplayval) {
+                if (!isdisplay) {
                     userinput = Console.getDoubleInput("Enter a number to do factorial on: ");
-                    cfcalc.setDisplay(userinput);
+                    coreCalc.setDisplay(userinput);
                 }
-                System.out.println("factorial(" + cfcalc.getDisplayValue() + ")= "
-                        + outputConverter(sCalc, sCalc.factorial(cfcalc.getDisplayValue())));
+                try {
+                    result = sciCalc.factorial(coreCalc.getDisplayValue());
+                    coreCalc.setDisplay(result);
+                    System.out.println("factorial(" + (int) coreCalc.getDisplayValue() + ")= " +
+                            outputConverter(sciCalc, result));
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case 16:
                 String temp = "";
                 temp = Console.getStringInput(
                         "type an option or click enter for auto next (decimal, hexadecimal, binary, octal): ");
                 if (temp.isEmpty())
-                    sCalc.switchDisplayMode();
+                    sciCalc.switchDisplayMode();
                 else
-                    sCalc.switchDisplayMode(temp);
+                    sciCalc.switchDisplayMode(temp);
 
                 break;
             case 17:
                 String temp2 = "";
                 temp2 = Console.getStringInput("type an option or click enter for auto next (radians, degree): ");
                 if (temp2.isEmpty())
-                    sCalc.switchUnitsMode();
+                    sciCalc.switchUnitsMode();
                 else
-                    sCalc.switchUnitsMode(temp2);
+                    sciCalc.switchUnitsMode(temp2);
                 break;
             case 18:
                 int x = Console.getIntegerInput(
-                        "Memmory options:\n1.Add a number to memmory\n2.Reset memmory\n3.Recall from memmory\nChoose an option: ");
+                "Memory options:\n1. Add to memory (M+)\n2. Clear memory (MC)\n3. Recall from memory (MR)");
                 switch (x) {
                     case 1:
-                        userinput = Console.getDoubleInput("Enter an number to add to memory: ");
-                        sCalc.memmoryFunctions(userinput, "m+");
+                        userinput = Console.getDoubleInput("Enter a number to add to memory: ");
+                        sciCalc.memoryFunctions(userinput, "M+");
+                        System.out.println("Added to memory. Memory now: " + sciCalc.mrc());
                         break;
                     case 2:
-                        sCalc.memmoryFunctions(x, "mc");
+                        sciCalc.memoryFunctions(0.0, "MC");
+                        System.out.println("Memory cleared");
                         break;
                     case 3:
-                        sCalc.memmoryFunctions(x, "mrc");
-                        cfcalc.setDisplay(sCalc.mrc());
+                        coreCalc.setDisplay(sciCalc.mrc());
+                        System.out.println("Recalled from memory: " + coreCalc.getDisplayValue());
                         break;
                     default:
+                        System.out.println("Invalid option");
                         break;
                 }
                 break;
+
             case 19:
-                if (!isdiplayval) {
+                if (!isdisplay) {
                     userinput = Console.getDoubleInput("Enter a number: ");
-                    cfcalc.setDisplay(userinput);
+                    coreCalc.setDisplay(userinput);
                 }
-                userinput = Console.getDoubleInput("Enter a number to see what percent of " + cfcalc.getDisplayValue() + " it is : ");
-                cfcalc.percentage(userinput);
-                System.out.println("= "+ cfcalc.getDisplayValue()+"%");
+                userinput = Console.getDoubleInput("Enter a number to see what percent of " + coreCalc.getDisplayValue() + " it is : ");
+                coreCalc.percentage(userinput);
+                System.out.println("= "+ coreCalc.getDisplayValue()+"%");
+                break;
 
             case 20:
-                if (!isdiplayval) {
-                    userinput = Console.getDoubleInput("Enter a decimal to turn to percent: ");
-                    cfcalc.setDisplay(userinput);
-                }
-                cfcalc.decimalToPercentage();
-                System.out.println("= "+ cfcalc.getDisplayValue()+"%");
-            default:
-
-                break;
+    if (!isdisplay) {
+        userinput = Console.getDoubleInput("Enter a decimal to turn to percent: ");
+        coreCalc.setDisplay(userinput);
+    }
+    double percentResult = sciCalc.decimalToPercentage(coreCalc.getDisplayValue());
+    coreCalc.setDisplay(percentResult);
+    System.out.println("= " + percentResult + "%");
+    break;
         }
     }
 }
